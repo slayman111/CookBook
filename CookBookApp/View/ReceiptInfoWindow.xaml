@@ -1,0 +1,98 @@
+﻿<Window x:Class="CookBookApp.View.ReceiptInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CookBookApp.View"
+        xmlns:viewmodel="clr-namespace:CookBookApp.ViewModel"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="CookBook" Height="650" Width="800"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <viewmodel:ReceiptInfoViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.ColumnSpan="2"
+            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+            Text="{Binding Receipt.Name}"
+            TextAlignment="Center"
+            VerticalAlignment="Center"
+            Foreground="White"
+            Background="{StaticResource PrimaryHueLightBrush}" />
+
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Margin="20">
+                <TextBlock
+                    Style="{StaticResource MaterialDesignBody1TextBlock}"
+                    Text="{Binding Categories}"
+                    HorizontalAlignment="Center"
+                    Foreground="{StaticResource PrimaryHueMidBrush}" />
+
+                <GroupBox Header="Автор рецепта">
+                    <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Text="{Binding Author}" />
+                </GroupBox>
+
+                <TextBlock
+                    Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                    Text="{Binding Receipt.Description}"
+                    TextWrapping="Wrap"
+                    Margin="0,20,0,0" />
+
+                <TextBlock
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                    Text="Энергетическая ценность на порцию"
+                    HorizontalAlignment="Center"
+                    TextWrapping="Wrap"
+                    Margin="0,20,0,0" />
+
+                <ListBox IsEnabled="True" Margin="0,10,0,10">
+                    <TextBlock Text="{Binding Receipt.Caloric, StringFormat=Калорийность {0}}" />
+                    <TextBlock Text="{Binding Receipt.Squirrels, StringFormat=Белки {0}}" />
+                    <TextBlock Text="{Binding Receipt.Fatness, StringFormat=Жиры {0}}" />
+                    <TextBlock Text="{Binding Receipt.Carbohydrates, StringFormat=Углеводы{0}}" />
+                </ListBox>
+
+                <TextBlock
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                    Text="Ингредиенты"
+                    HorizontalAlignment="Center"
+                    TextWrapping="Wrap"
+                    Margin="0,20,0,0" />
+
+                <ListBox ItemsSource="{Binding Receipt.Ingridients}" IsEnabled="True" Margin="0,10,0,10" />
+
+                <materialDesign:Card>
+                    <StackPanel>
+                        <Expander HorizontalAlignment="Stretch" Header="Инструкция по приготовлению">
+                            <StackPanel
+                                Orientation="Vertical"
+                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                                Margin="24,8,24,16">
+                                <TextBlock Text="{Binding Instruction}" Style="{StaticResource MaterialDesignHeadline6TextBlock}" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Expander>
+                    </StackPanel>
+                </materialDesign:Card>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button
+            HorizontalAlignment="Left"
+            Grid.Row="2"
+            Style="{StaticResource MaterialDesignFlatLightBgButton}"
+            Command="{Binding OpenReceiptsCommand}"
+            Content="Назад"
+            Width="180"
+            Margin="20,0,25,0" />
+    </Grid>
+</Window>

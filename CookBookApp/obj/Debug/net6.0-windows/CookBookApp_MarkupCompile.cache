@@ -1,0 +1,20 @@
+﻿CookBookApp
+
+
+winexe
+C#
+.cs
+D:\Projects\College\4 course\CookBookApp\CookBookApp\obj\Debug\net6.0-windows\
+CookBookApp
+none
+false
+TRACE;DEBUG;NET;NET6_0;NETCOREAPP
+D:\Projects\College\4 course\CookBookApp\CookBookApp\App.xaml
+5-408922845
+1-1181725287
+241245196996
+2171494983229
+View\AddNewReceiptWindow.xaml;View\AuthorizationWindow.xaml;View\ReceiptInfoWindow.xaml;View\ReceiptsWindow.xaml;View\RegistrationWindow.xaml;
+
+False
+

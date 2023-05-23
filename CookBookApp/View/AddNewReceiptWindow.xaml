@@ -1,0 +1,99 @@
+﻿<Window x:Class="CookBookApp.View.AddNewReceiptWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CookBookApp.View"
+        xmlns:viewmodel="clr-namespace:CookBookApp.ViewModel"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="CookBook" Height="650" Width="400"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <viewmodel:AddNewReceiptViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.ColumnSpan="2"
+            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+            Text="Добавить рецепт"
+            TextAlignment="Center"
+            VerticalAlignment="Center"
+            Foreground="White"
+            Background="{StaticResource PrimaryHueLightBrush}" />
+
+        <StackPanel Grid.Row="1" Margin="20" VerticalAlignment="Center">
+            <TextBox
+                FontSize="18"
+                materialDesign:HintAssist.Hint="Название"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding Name}"
+                VerticalAlignment="Center" />
+
+            <TextBox
+                TextWrapping="Wrap"
+                VerticalAlignment="Stretch"
+                MinWidth="280"
+                AcceptsReturn="True"
+                Margin="0,20,0,0"
+                VerticalScrollBarVisibility="Auto"
+                materialDesign:HintAssist.Hint="Описание"
+                Text="{Binding Description}"
+                Height="80" />
+
+            <TextBox
+                FontSize="18"
+                Margin="0,20,0,0"
+                materialDesign:HintAssist.Hint="Калорийность"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding Caloric}"
+                VerticalAlignment="Center" />
+
+            <TextBox
+                FontSize="18"
+                Margin="0,20,0,0"
+                materialDesign:HintAssist.Hint="Белки"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding Squirrels}"
+                VerticalAlignment="Center" />
+
+            <TextBox
+                FontSize="18"
+                Margin="0,20,0,0"
+                materialDesign:HintAssist.Hint="Жиры"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding Fatness}"
+                VerticalAlignment="Center" />
+
+            <TextBox
+                FontSize="18"
+                Margin="0,20,0,0"
+                materialDesign:HintAssist.Hint="Углеводы"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding Carbohydrates}"
+                VerticalAlignment="Center" TextChanged="TextBox_TextChanged" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,20">
+                <Button
+                    Style="{StaticResource MaterialDesignFlatLightBgButton}"
+                    Command="{Binding OpenReceiptsCommand}"
+                    Content="Назад"
+                    Width="180"
+                    Margin="0,0,25,0" />
+                <Button
+                    Style="{StaticResource MaterialDesignFlatLightBgButton}"
+                    Command="{Binding AddReceiptCommand}"
+                    Content="Добавить"
+                    Width="180"
+                    IsDefault="True" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

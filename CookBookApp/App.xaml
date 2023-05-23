@@ -1,0 +1,31 @@
+﻿<Application
+    x:Class="CookBookApp.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:CookBookApp"
+    StartupUri="View/AuthorizationWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Color x:Key="MainColor">#FFC353</Color>
+
+            <!-- primary hues  -->
+            <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="{StaticResource MainColor}" />
+            <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush" Color="White" />
+            <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="{StaticResource MainColor}" />
+            <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="White" />
+            <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="{StaticResource MainColor}" />
+            <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="White" />
+            <!--  accent -->
+            <SolidColorBrush x:Key="SecondaryAccentBrush" Color="{StaticResource MainColor}" />
+            <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="{StaticResource MainColor}" />
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
