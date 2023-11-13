@@ -1,10 +1,10 @@
-﻿using CookBookApp.Command;
+﻿using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using CookBookApp.Command;
 using CookBookApp.Core;
 using CookBookApp.Models.Entities;
 using CookBookApp.View;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
 
 namespace CookBookApp.ViewModel
 {

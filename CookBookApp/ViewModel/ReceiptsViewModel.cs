@@ -1,14 +1,14 @@
-﻿using CookBookApp.Command;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using CookBookApp.Command;
 using CookBookApp.Core;
 using CookBookApp.Models;
 using CookBookApp.Models.Entities;
 using CookBookApp.View;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
 
 namespace CookBookApp.ViewModel
 {
@@ -20,6 +20,7 @@ namespace CookBookApp.ViewModel
         private ReceiptModel _selectedReceipt;
 
         public IEnumerable<ReceiptModel> Receipts { get => _receipts; set => SetProperty(ref _receipts, value); }
+
         public bool OnlyUserReceipts
         {
             get => _onlyUserReceipts;
@@ -31,8 +32,10 @@ namespace CookBookApp.ViewModel
                 else DisplayReceipts();
             }
         }
+
         public string SearchString { get => _searchString; set => SetProperty(ref _searchString, value); }
         public string Username { get => LogginedUser.User!.GetFullname(); }
+
         public ReceiptModel SelectedReceipt
         {
             get => _selectedReceipt;
@@ -141,12 +144,16 @@ namespace CookBookApp.ViewModel
 
             if (OnlyUserReceipts)
                 Receipts = new ObservableCollection<ReceiptModel>(receipts
-                    .Where(r => (r.Name.Contains(SearchString) || string.Join(" ", r.Ingridients.Select(i => i.Name)).ToLower().Contains(SearchString.ToLower()))
-                        && r.Users.FirstOrDefault()!.Id.Equals(LogginedUser.User!.Id))
+                    .Where(r => (r.Name.Contains(SearchString) || string.Join(" ",
+                                        r.Ingridients.Select(i => i.Name))
+                                    .ToLower().Contains(SearchString.ToLower()))
+                                && r.Users.FirstOrDefault()!.Id.Equals(LogginedUser.User!.Id))
                     .Select(r => (ReceiptModel)r));
             else
                 Receipts = new ObservableCollection<ReceiptModel>(receipts
-                    .Where(r => r.Name.Contains(SearchString) || string.Join(" ", r.Ingridients.Select(i => i.Name)).ToLower().Contains(SearchString.ToLower()))
+                    .Where(r => r.Name.Contains(SearchString) || string.Join(" ",
+                            r.Ingridients.Select(i => i.Name))
+                        .ToLower().Contains(SearchString.ToLower()))
                     .Select(r => (ReceiptModel)r));
         }
     }

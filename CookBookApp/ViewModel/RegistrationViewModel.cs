@@ -1,15 +1,10 @@
-﻿using CookBookApp.Command;
-using CookBookApp.View;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows;
+using System.Windows.Input;
+using CookBookApp.Command;
 using CookBookApp.Models.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
+using CookBookApp.View;
 
 namespace CookBookApp.ViewModel
 {
@@ -47,7 +42,8 @@ namespace CookBookApp.ViewModel
                     context.Users.Add(new User(Login!, Password!, FirstName!, LastName!));
                     await context.SaveChangesAsync();
 
-                    MessageBox.Show("Аккаунт успешно зарегистрирован", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Аккаунт успешно зарегистрирован", "Информация",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
 
                     OpenAuthorizationWindow();
                 }
@@ -63,7 +59,8 @@ namespace CookBookApp.ViewModel
         private static void OpenAuthorizationWindow()
         {
             new AuthorizationWindow().Show();
-            Application.Current?.Windows.Cast<Window>()?.FirstOrDefault(window => window is RegistrationWindow)?.Close();
+            Application.Current?.Windows.Cast<Window>()?.FirstOrDefault(window => window is RegistrationWindow)
+                ?.Close();
         }
     }
 }

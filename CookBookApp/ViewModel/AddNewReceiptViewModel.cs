@@ -1,13 +1,12 @@
-﻿using CookBookApp.Command;
-using CookBookApp.Core;
-using CookBookApp.Models.Entities;
-using CookBookApp.View;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using CookBookApp.Command;
+using CookBookApp.Core;
+using CookBookApp.Models.Entities;
+using CookBookApp.View;
 
 namespace CookBookApp.ViewModel
 {
@@ -38,7 +37,8 @@ namespace CookBookApp.ViewModel
                 {
                     using var context = new CookBookDbContext();
 
-                    if (new string?[] { Name, Description, Caloric, Squirrels, Fatness, Carbohydrates }.Any(s => s is null))
+                    if (new string?[] { Name, Description, Caloric, Squirrels, Fatness, Carbohydrates }.Any(s =>
+                            s is null))
                         throw new Exception("Заполните все поля!");
 
                     context.Receipts.Add(new Receipt(Name, Description, Caloric, Squirrels, Fatness, Carbohydrates)
@@ -61,7 +61,8 @@ namespace CookBookApp.ViewModel
         private static void OpenReceiptsWindow()
         {
             new ReceiptsWindow().Show();
-            Application.Current?.Windows.Cast<Window>()?.FirstOrDefault(window => window is AddNewReceiptWindow)?.Close();
+            Application.Current?.Windows.Cast<Window>()?.FirstOrDefault(window => window is AddNewReceiptWindow)
+                ?.Close();
         }
     }
 }

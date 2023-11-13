@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace CookBookApp.Models.Entities
 {
     public partial class CookBookDbContext : DbContext
     {
-         public CookBookDbContext()
+        public CookBookDbContext()
         {
         }
 
@@ -24,11 +25,15 @@ namespace CookBookApp.Models.Entities
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-9VONLGS;Database=CookBookDb;Trusted_connection=true");
-            }
+            if (optionsBuilder.IsConfigured) return;
+
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            string connectionString = configuration.GetConnectionString("DefaultConnection");
+            optionsBuilder.UseSqlServer(connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -76,8 +81,10 @@ namespace CookBookApp.Models.Entities
                     .WithMany(p => p.Receipts)
                     .UsingEntity<Dictionary<string, object>>(
                         "ReceiptHasCategory",
-                        l => l.HasOne<Category>().WithMany().HasForeignKey("CategoryId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ReceiptHasCategory_Category"),
-                        r => r.HasOne<Receipt>().WithMany().HasForeignKey("ReceiptId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ReceiptHasCategory_Receipt"),
+                        l => l.HasOne<Category>().WithMany().HasForeignKey("CategoryId")
+                            .OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ReceiptHasCategory_Category"),
+                        r => r.HasOne<Receipt>().WithMany().HasForeignKey("ReceiptId")
+                            .OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ReceiptHasCategory_Receipt"),
                         j =>
                         {
                             j.HasKey("ReceiptId", "CategoryId");
@@ -89,8 +96,12 @@ namespace CookBookApp.Models.Entities
                     .WithMany(p => p.Receips)
                     .UsingEntity<Dictionary<string, object>>(
                         "ReceiptHasIngridient",
-                        l => l.HasOne<Ingredient>().WithMany().HasForeignKey("IngridientId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ReceiptHasIngridient_Ingredient"),
-                        r => r.HasOne<Receipt>().WithMany().HasForeignKey("ReceipId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ReceiptHasIngridient_Receipt"),
+                        l => l.HasOne<Ingredient>().WithMany().HasForeignKey("IngridientId")
+                            .OnDelete(DeleteBehavior.ClientSetNull)
+                            .HasConstraintName("FK_ReceiptHasIngridient_Ingredient"),
+                        r => r.HasOne<Receipt>().WithMany().HasForeignKey("ReceipId")
+                            .OnDelete(DeleteBehavior.ClientSetNull)
+                            .HasConstraintName("FK_ReceiptHasIngridient_Receipt"),
                         j =>
                         {
                             j.HasKey("ReceipId", "IngridientId");
@@ -102,8 +113,12 @@ namespace CookBookApp.Models.Entities
                     .WithMany(p => p.Receipts)
                     .UsingEntity<Dictionary<string, object>>(
                         "ReceiptHasInstruction",
-                        l => l.HasOne<Instruction>().WithMany().HasForeignKey("InstructionId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ReceiptHasInstruction_Instruction"),
-                        r => r.HasOne<Receipt>().WithMany().HasForeignKey("ReceiptId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ReceiptHasInstruction_Receipt"),
+                        l => l.HasOne<Instruction>().WithMany().HasForeignKey("InstructionId")
+                            .OnDelete(DeleteBehavior.ClientSetNull)
+                            .HasConstraintName("FK_ReceiptHasInstruction_Instruction"),
+                        r => r.HasOne<Receipt>().WithMany().HasForeignKey("ReceiptId")
+                            .OnDelete(DeleteBehavior.ClientSetNull)
+                            .HasConstraintName("FK_ReceiptHasInstruction_Receipt"),
                         j =>
                         {
                             j.HasKey("ReceiptId", "InstructionId");
@@ -115,8 +130,10 @@ namespace CookBookApp.Models.Entities
                     .WithMany(p => p.Receipts)
                     .UsingEntity<Dictionary<string, object>>(
                         "UserHasReceipt",
-                        l => l.HasOne<User>().WithMany().HasForeignKey("UserId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_UserHasReceipts_User"),
-                        r => r.HasOne<Receipt>().WithMany().HasForeignKey("ReceiptId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_UserHasReceipts_Receipt"),
+                        l => l.HasOne<User>().WithMany().HasForeignKey("UserId").OnDelete(DeleteBehavior.ClientSetNull)
+                            .HasConstraintName("FK_UserHasReceipts_User"),
+                        r => r.HasOne<Receipt>().WithMany().HasForeignKey("ReceiptId")
+                            .OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_UserHasReceipts_Receipt"),
                         j =>
                         {
                             j.HasKey("ReceiptId", "UserId");
